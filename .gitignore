@@ -57,3 +57,4 @@ CMakeLists.txt
 cmake-build-debug
 *.lss
 *.sym
+apps/my_apps/sn_seq/project_build/project.bin

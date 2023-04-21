@@ -1,0 +1,7 @@
+What to do next
+---------------
+
+-Define sequence structure
+-Rudimentary LCD display (just note numbers)
+-Button input to switch display modes
+-Integrate sequence structure with existing code
