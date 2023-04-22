@@ -80,6 +80,17 @@ void APP_Init(void)
 /////////////////////////////////////////////////////////////////////////////
 void APP_Background(void)
 {
+    // print system time
+    MIOS32_LCD_CursorSet(0, 0); // X, Y
+    MIOS32_LCD_PrintFormattedString("System Time");
+
+    MIOS32_LCD_CursorSet(0, 1); // X, Y
+    mios32_sys_time_t t = MIOS32_SYS_TimeGet();
+    int hours = t.seconds / 3600;
+    int minutes = (t.seconds % 3600) / 60;
+    int seconds = (t.seconds % 3600) % 60;
+    int milliseconds = t.fraction_ms;
+    MIOS32_LCD_PrintFormattedString("%02d:%02d:%02d.%03d", hours, minutes, seconds, milliseconds);
 }
 
 

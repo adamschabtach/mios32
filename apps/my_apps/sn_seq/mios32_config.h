@@ -11,8 +11,8 @@
 #define _MIOS32_CONFIG_H
 
 // The boot message which is print during startup and returned on a SysEx query
-#define MIOS32_LCD_BOOT_MSG_LINE1 "Tutorial #017"
-#define MIOS32_LCD_BOOT_MSG_LINE2 "(C) 2009 T.Klose"
+#define MIOS32_LCD_BOOT_MSG_LINE1 "Studio Nebula Sequencer"
+#define MIOS32_LCD_BOOT_MSG_LINE2 "(C) 2023 Adam Schabtach"
 
 
 #endif /* _MIOS32_CONFIG_H */

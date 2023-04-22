@@ -11,22 +11,30 @@
 #pragma once
 
 #include <stdint.h>
+#include <vector>
 
 class Sequencer 
 {
 	public:
 
+	Sequencer();
+
 	class Step
 	{
-		public:
-
 		Step();
-		~Step();
 
 		bool active;
-		uint8_t noteNumber;
-		uint8_t velocity;
-		uint8_t gateLength;
-		uint8_t ccValue;
+		int noteNumber;
+		int velocity;
+		int gateLength;
+		int ccValue;
+		int probability;
+		int clockMultiplier;
 	};
+
+	static const int MaxSteps = 16;
+
+	vector<Step> sequence;
+	int currentStepIndex;
+	int sequenceLength;
 };
