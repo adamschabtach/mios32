@@ -23,6 +23,16 @@ class Sequencer
 	{
 		Step();
 
+		enum Parameter {
+			active = 0,
+			noteNumber,
+			velocity,
+			gateLength,
+			ccValue,
+			probability,
+			clockMultiplier
+		};
+
 		bool active;
 		int noteNumber;
 		int velocity;

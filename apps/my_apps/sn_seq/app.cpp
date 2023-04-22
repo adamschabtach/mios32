@@ -46,20 +46,22 @@
 /////////////////////////////////////////////////////////////////////////////
 // Local Prototypes
 /////////////////////////////////////////////////////////////////////////////
-static void TASK_SEQ(void *pvParameters);
-static s32 NOTIFY_MIDI_Rx(mios32_midi_port_t port, u8 byte);
+extern "C" void TASK_SEQ(void *pvParameters);
+extern "C" s32 NOTIFY_MIDI_Rx(mios32_midi_port_t port, u8 byte);
 
 
 /////////////////////////////////////////////////////////////////////////////
 // This hook is called after startup to initialize the application
 /////////////////////////////////////////////////////////////////////////////
-void APP_Init(void)
+extern "C" void APP_Init(void)
 {
   // initialize all LEDs
   MIOS32_BOARD_LED_Init(0xffffffff);
 
   // turn off gate LED
   MIOS32_BOARD_LED_Set(1, 0);
+  
+  MIOS32_LCD_Clear();
 
   // initialize MIDI handler
   SEQ_MIDI_OUT_Init(0);
@@ -78,7 +80,7 @@ void APP_Init(void)
 /////////////////////////////////////////////////////////////////////////////
 // This task is running endless in background
 /////////////////////////////////////////////////////////////////////////////
-void APP_Background(void)
+extern "C" void APP_Background(void)
 {
     // print system time
     MIOS32_LCD_CursorSet(0, 0); // X, Y
@@ -101,7 +103,7 @@ void APP_Background(void)
 // Alternatively you could create a dedicated task for application specific
 // jobs as explained in $MIOS32_PATH/apps/tutorials/006_rtos_tasks
 /////////////////////////////////////////////////////////////////////////////
-void APP_Tick(void)
+extern "C" void APP_Tick(void)
 {
   // set LED depending on sequencer run state
   MIOS32_BOARD_LED_Set(1, SEQ_BPM_IsRunning() ? 1 : 0);
@@ -113,7 +115,7 @@ void APP_Tick(void)
 // MIDI events. You could add more MIDI related jobs here, but they shouldn't
 // consume more than 300 uS to ensure the responsiveness of incoming MIDI.
 /////////////////////////////////////////////////////////////////////////////
-void APP_MIDI_Tick(void)
+extern "C" void APP_MIDI_Tick(void)
 {
 }
 
@@ -121,7 +123,7 @@ void APP_MIDI_Tick(void)
 /////////////////////////////////////////////////////////////////////////////
 // This hook is called when a MIDI package has been received
 /////////////////////////////////////////////////////////////////////////////
-void APP_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t midi_package)
+extern "C" void APP_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t midi_package)
 {
   // Note On received?
   if( midi_package.chn == Chn1 && 
@@ -139,7 +141,7 @@ void APP_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_package_t midi_
 /////////////////////////////////////////////////////////////////////////////
 // This hook is called before the shift register chain is scanned
 /////////////////////////////////////////////////////////////////////////////
-void APP_SRIO_ServicePrepare(void)
+extern "C" void APP_SRIO_ServicePrepare(void)
 {
 }
 
@@ -147,7 +149,7 @@ void APP_SRIO_ServicePrepare(void)
 /////////////////////////////////////////////////////////////////////////////
 // This hook is called after the shift register chain has been scanned
 /////////////////////////////////////////////////////////////////////////////
-void APP_SRIO_ServiceFinish(void)
+extern "C" void APP_SRIO_ServiceFinish(void)
 {
 }
 
@@ -156,7 +158,7 @@ void APP_SRIO_ServiceFinish(void)
 // This hook is called when a button has been toggled
 // pin_value is 1 when button released, and 0 when button pressed
 /////////////////////////////////////////////////////////////////////////////
-void APP_DIN_NotifyToggle(u32 pin, u32 pin_value)
+extern "C" void APP_DIN_NotifyToggle(u32 pin, u32 pin_value)
 {
 }
 
@@ -166,7 +168,7 @@ void APP_DIN_NotifyToggle(u32 pin, u32 pin_value)
 // incrementer is positive when encoder has been turned clockwise, else
 // it is negative
 /////////////////////////////////////////////////////////////////////////////
-void APP_ENC_NotifyChange(u32 encoder, s32 incrementer)
+extern "C" void APP_ENC_NotifyChange(u32 encoder, s32 incrementer)
 {
 }
 
@@ -174,7 +176,7 @@ void APP_ENC_NotifyChange(u32 encoder, s32 incrementer)
 /////////////////////////////////////////////////////////////////////////////
 // This hook is called when a pot has been moved
 /////////////////////////////////////////////////////////////////////////////
-void APP_AIN_NotifyChange(u32 pin, u32 pin_value)
+extern "C" void APP_AIN_NotifyChange(u32 pin, u32 pin_value)
 {
 }
 
@@ -182,7 +184,7 @@ void APP_AIN_NotifyChange(u32 pin, u32 pin_value)
 /////////////////////////////////////////////////////////////////////////////
 // This task is called periodically each mS to handle sequencer requests
 /////////////////////////////////////////////////////////////////////////////
-static void TASK_SEQ(void *pvParameters)
+extern "C" void TASK_SEQ(void *pvParameters)
 {
   portTickType xLastExecutionTime;
 
@@ -203,7 +205,7 @@ static void TASK_SEQ(void *pvParameters)
 /////////////////////////////////////////////////////////////////////////////
 // Installed via MIOS32_MIDI_DirectRxCallback_Init
 /////////////////////////////////////////////////////////////////////////////
-static s32 NOTIFY_MIDI_Rx(mios32_midi_port_t port, u8 midi_byte)
+extern "C" s32 NOTIFY_MIDI_Rx(mios32_midi_port_t port, u8 midi_byte)
 {
   // here we could filter a certain port
   // The BPM generator will deliver inaccurate results if MIDI clock 

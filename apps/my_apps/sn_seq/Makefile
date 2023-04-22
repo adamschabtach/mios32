@@ -14,9 +14,13 @@ LCD       =     $(MIOS32_LCD)
 # Source Files, include paths and libraries
 ################################################################################
 
-THUMB_SOURCE    = app.c \
-		  seq.c
+# add C files here
+THUMB_SOURCE    = seq.c 
 
+# add C++ files here
+THUMB_CPP_SOURCE = app.cpp \
+				   Display.cpp \
+				   Sequencer.cpp
 
 # (following source stubs not relevant for Cortex M3 derivatives)
 THUMB_AS_SOURCE =

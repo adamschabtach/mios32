@@ -1,6 +1,6 @@
 What to do next
 ---------------
-
+-Project isn't set up for C++. Copy stuff from templates/app_skeleton_cpp to get this party started.
 -Define sequence structure
 -Rudimentary LCD display (just note numbers)
 -Button input to switch display modes
