@@ -14,8 +14,8 @@ clockMultiplier(1)
 }
 
 Sequencer::Sequencer()
-: currentStepIndex(0),
-sequenceLength(MaxSteps)
+: currentStepIndex(0)
 {
+	sequenceLength = MaxSteps;
 	sequence.reserve(MaxSteps);
 }
