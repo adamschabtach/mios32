@@ -15,22 +15,23 @@
 
 class Sequencer 
 {
-	public:
+public:
 
 	Sequencer();
 
 	class Step
 	{
+	public:
 		Step();
 
-		enum Parameter {
-			active = 0,
-			noteNumber,
-			velocity,
-			gateLength,
-			ccValue,
-			probability,
-			clockMultiplier
+		enum Parameters {
+			p_active = 0,
+			p_noteNumber,
+			p_velocity,
+			p_gateLength,
+			p_ccValue,
+			p_probability,
+			p_clockMultiplier
 		};
 
 		bool active;
@@ -44,7 +45,7 @@ class Sequencer
 
 	static const int MaxSteps = 16;
 
-	vector<Step> sequence;
+	std::vector<Step> sequence;
 	int currentStepIndex;
 	int sequenceLength;
 };

@@ -8,40 +8,38 @@
  * 
  */
 
-#pragma once
-
 #include "Display.h"
 #include "Sequencer.h"
 
 Display::Display()
 : currentMode(OneParameterForSteps),
-currentParameter(NoteNumber)
+currentParameter(Sequencer::Step::p_noteNumber)
 {
 }
 
-void Display::setMode(Modes newMode, Sequence &seq)
+void Display::setMode(Modes newMode, Sequencer &seq)
 {
 	if (newMode != currentMode) {
 		currentMode = newMode;
-  		MIOS32_LCD_Clear();
+//  		MIOS32_LCD_Clear();
 		update(seq);
 	}
 }
 
 /** Show the given parameter for all steps */
-void Display::showParameterForSteps(Sequence &seq, Sequence::Step::Parameters param)
+void Display::showParameterForSteps(Sequencer &seq, Sequencer::Step::Parameters param)
 {
 }
 
 /** Show all parameters for one step */
-void Display::showStepParameters(Sequence::Step &step)
+void Display::showStepParameters(Sequencer::Step &step)
 {
 }
 
 /** Redraw the display. whichStep indicates which step needs to be redrawn;
  * use -1 to indicate all steps.
  */
-void Display::update(Sequence &seq, int whichStep)
+void Display::update(Sequencer &seq, int whichStep)
 {
 	switch (currentMode) {
 		case OneParameterForSteps:
@@ -54,13 +52,13 @@ void Display::update(Sequence &seq, int whichStep)
 			}
 			break;
 		case AllParametersForStep:
-			showStepParameters(seq[whichStep]);
+			showStepParameters(seq.sequence[whichStep]);
 			break;
 	}
 }
 
 /** Display the current parameter for one step in the sequence. */
-void Display::drawStepParameter(Sequence &seq, int whichStep)
+void Display::drawStepParameter(Sequencer &seq, int whichStep)
 {
 
 }
