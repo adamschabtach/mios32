@@ -140,8 +140,11 @@ dirs:
 	@$(NM) -n $< > $@
 
 # rule to create .elf file
+# AS this needs to use g++ for C++ builds
+# $(PROJECT_OUT)/$(PROJECT).elf: $(ALL_OBJS)
+# 	@$(CC) $(CFLAGS) $(ALL_OBJS) $(LIBS) $(LDFLAGS) -o$@
 $(PROJECT_OUT)/$(PROJECT).elf: $(ALL_OBJS)
-	@$(CC) $(CFLAGS) $(ALL_OBJS) $(LIBS) $(LDFLAGS) -o$@
+	@$(CPP) $(CFLAGS) $(ALL_OBJS) $(LIBS) $(LDFLAGS) -o$@
 
 
 # rule to output project informations
