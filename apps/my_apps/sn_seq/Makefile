@@ -19,6 +19,7 @@ THUMB_SOURCE    = seq.c
 
 # add C++ files here
 THUMB_CPP_SOURCE = app.cpp \
+				   Editor.cpp \
 				   Display.cpp \
 				   Sequencer.cpp
 
