@@ -10,6 +10,7 @@
 
 #include "Display.h"
 #include "Sequencer.h"
+#include <mios32.h>
 
 Display::Display()
 : currentMode(OneParameterForSteps),
@@ -21,7 +22,7 @@ void Display::setMode(Modes newMode, Sequencer &seq)
 {
 	if (newMode != currentMode) {
 		currentMode = newMode;
-//  		MIOS32_LCD_Clear();
+  		MIOS32_LCD_Clear();
 		update(seq);
 	}
 }
