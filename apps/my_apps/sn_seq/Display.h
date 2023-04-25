@@ -15,14 +15,17 @@
 class Display
 {
 public:
-	enum Modes {
+	enum DisplayModes {
 		OneParameterForSteps = 0,
 		AllParametersForStep
 	};
 	Display();
 
 	/** Choose the display mode. */
-	void setMode(Modes newMode, Sequencer &seq);
+	void setMode(Sequencer &seq, DisplayModes newMode);
+
+	/** Set which parameter will be displayed for all steps. */
+	void setParameter(Sequencer &seq, Sequencer::Step::Parameters param);
 
 	/** Redraw the display. whichStep indicates which step needs to be redrawn;
 	 * use -1 to indicate all steps.
@@ -31,7 +34,7 @@ public:
 
 private:
 
-	Modes currentMode;
+	DisplayModes currentMode;
 	Sequencer::Step::Parameters currentParameter;
 
 	/** Display the current parameter for one step in the sequence. */

@@ -22,6 +22,23 @@ void Editor::handleButtonChange(Sequencer& seq, int button, bool pressed)
 {
 }
 
-void Editor::setMode(EditMode newMode)
+void Editor::setMode(Sequencer &seq, EditModes newMode)
 {
+	if (currentMode != newMode) {
+		currentMode = newMode;
+		switch (newMode) {
+			case noteNumbers:
+				display.setMode(seq, Display::DisplayModes::OneParameterForSteps);
+				display.setParameter(seq, Sequencer::Step::Parameters::p_noteNumber);
+				break;
+			case velocities:
+			case gateLengths:
+			case ccValues:
+			case probabilities:
+			case clockMultipliers:
+			case allStepParams:
+			break;
+		}
+	}
 }
+

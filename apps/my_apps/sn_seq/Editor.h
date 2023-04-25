@@ -16,6 +16,17 @@
 class Editor
 {
 public:
+
+	enum EditModes {
+		noteNumbers = 0,
+		velocities,
+		gateLengths,
+		ccValues,
+		probabilities,
+		clockMultipliers,
+		allStepParams
+	};
+
 	Editor();
 
 	/** Do something in response to an encoder change. */
@@ -25,5 +36,11 @@ public:
 	void handleButtonChange(Sequencer &seq, int button, bool pressed);
 
 	/** Set editing mode. */
-	void setMode(EditMode newMode);
+	void setMode(Sequencer &seq, EditModes newMode);
+
+	Display display;
+
+private:
+
+	EditModes currentMode;
 };

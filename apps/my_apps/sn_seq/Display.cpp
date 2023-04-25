@@ -18,11 +18,20 @@ currentParameter(Sequencer::Step::p_noteNumber)
 {
 }
 
-void Display::setMode(Modes newMode, Sequencer &seq)
+void Display::setMode(Sequencer &seq, DisplayModes newMode)
 {
 	if (newMode != currentMode) {
 		currentMode = newMode;
   		MIOS32_LCD_Clear();
+		update(seq);
+	}
+}
+
+/** Set which parameter will be displayed for all steps. */
+void Display::setParameter(Sequencer &seq, Sequencer::Step::Parameters param)
+{
+	if (param != currentParameter) {
+		currentParameter = param;
 		update(seq);
 	}
 }
