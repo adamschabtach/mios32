@@ -15,7 +15,8 @@ LCD       =     $(MIOS32_LCD)
 ################################################################################
 
 # add C files here
-THUMB_SOURCE    = seq.c 
+THUMB_SOURCE    = seq.c \
+				  seq_lcd.c
 
 # add C++ files here
 THUMB_CPP_SOURCE = app.cpp \

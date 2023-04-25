@@ -26,6 +26,7 @@
 #include <seq_midi_out.h>
 
 #include "seq.h"
+#include "seq_lcd.h"
 #include "app.h"
 
 
@@ -60,8 +61,11 @@ extern "C" void APP_Init(void)
 
   // turn off gate LED
   MIOS32_BOARD_LED_Set(1, 0);
-  
-  MIOS32_LCD_Clear();
+
+  // initialize hardware soft-config
+  //SEQ_HWCFG_Init(0);
+
+  SEQ_LCD_Init(0); 
 
   // initialize MIDI handler
   SEQ_MIDI_OUT_Init(0);
@@ -74,6 +78,7 @@ extern "C" void APP_Init(void)
 
   // install sequencer task
   xTaskCreate(TASK_SEQ, "SEQ", configMINIMAL_STACK_SIZE, NULL, PRIORITY_TASK_SEQ, NULL);
+
 }
 
 
@@ -82,6 +87,13 @@ extern "C" void APP_Init(void)
 /////////////////////////////////////////////////////////////////////////////
 extern "C" void APP_Background(void)
 {
+  SEQ_LCD_Clear();
+  SEQ_LCD_CursorSet(10, 0);
+  SEQ_LCD_PrintString("Here at 10,0");
+  SEQ_LCD_CursorSet(70, 1);
+  SEQ_LCD_PrintString("Here at 70,1");
+  SEQ_LCD_Update(1);
+/*
     // print system time
     MIOS32_LCD_CursorSet(0, 0); // X, Y
     MIOS32_LCD_PrintFormattedString("System Time");
@@ -93,6 +105,7 @@ extern "C" void APP_Background(void)
     int seconds = (t.seconds % 3600) % 60;
     int milliseconds = t.fraction_ms;
     MIOS32_LCD_PrintFormattedString("%02d:%02d:%02d.%03d", hours, minutes, seconds, milliseconds);
+*/
 }
 
 
