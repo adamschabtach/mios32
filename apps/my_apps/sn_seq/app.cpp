@@ -24,6 +24,7 @@
 #include <notestack.h>
 #include <seq_bpm.h>
 #include <seq_midi_out.h>
+#include "../../sequencers/midibox_seq_v4/core/seq_hwcfg.h"
 
 #include "seq.h"
 #include "seq_lcd.h"
@@ -63,7 +64,7 @@ extern "C" void APP_Init(void)
   MIOS32_BOARD_LED_Set(1, 0);
 
   // initialize hardware soft-config
-  //SEQ_HWCFG_Init(0);
+  SEQ_HWCFG_Init(0);
 
   SEQ_LCD_Init(0); 
 
