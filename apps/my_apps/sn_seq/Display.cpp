@@ -92,5 +92,6 @@ void Display::drawStepParameter(Sequencer &seq, int whichStep)
 	}
 	sprintf(str, "%d", n);
 	SEQ_LCD_PrintStringPadded(str, 5);
+	SEQ_LCD_Update(0);
 }
 

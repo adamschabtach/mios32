@@ -17,5 +17,7 @@ Sequencer::Sequencer()
 : currentStepIndex(0)
 {
 	sequenceLength = MaxSteps;
-	sequence.reserve(MaxSteps);
+	for (int i = 0; i < MaxSteps; i++) {
+		sequence.assign(i, Step());
+	}
 }
