@@ -24,8 +24,9 @@
 #include <notestack.h>
 #include <seq_bpm.h>
 #include <seq_midi_out.h>
+extern "C" {
 #include "../../sequencers/midibox_seq_v4/core/seq_hwcfg.h"
-
+}
 #include "seq.h"
 #include "seq_lcd.h"
 #include "app.h"
