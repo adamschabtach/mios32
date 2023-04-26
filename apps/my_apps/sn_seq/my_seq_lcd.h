@@ -22,6 +22,7 @@
 #ifndef _SEQ_LCD_H
 #define _SEQ_LCD_H
 
+#include <mios32.h>
 #ifdef __cplusplus
 extern "C" {
 #endif

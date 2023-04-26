@@ -44,7 +44,7 @@
 #include <stdarg.h>
 //#include "tasks.h"
 
-#include "seq_lcd.h"
+#include "my_seq_lcd.h"
 /*
 #include "seq_ui.h"
 #include "seq_midi_port.h"
@@ -382,7 +382,6 @@ s32 SEQ_LCD_PrintSpaces(int num)
   return 0; // no error
 }
 
-#if 0
  
 
 /////////////////////////////////////////////////////////////////////////////
@@ -404,6 +403,7 @@ s32 SEQ_LCD_PrintStringPadded(char *str, u32 width)
   return 0; // no error
 }
 
+#if 0
 
 /////////////////////////////////////////////////////////////////////////////
 // prints a vertical bar for a 3bit value
