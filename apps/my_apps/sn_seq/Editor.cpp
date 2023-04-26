@@ -9,6 +9,8 @@
  */
 
 #include "Editor.h"
+#include "Display.h"
+#include "Sequencer.h"
 
 Editor::Editor()
 {
@@ -28,15 +30,10 @@ void Editor::setMode(Sequencer &seq, EditModes newMode)
 		currentMode = newMode;
 		switch (newMode) {
 			case noteNumbers:
-				display.setMode(seq, Display::DisplayModes::OneParameterForSteps);
-				display.setParameter(seq, Sequencer::Step::Parameters::p_noteNumber);
+				display.setMode(seq, Display::OneParameterForSteps);
+				display.setParameter(seq, Sequencer::Step::p_noteNumber);
 				break;
 			case velocities:
-			case gateLengths:
-			case ccValues:
-			case probabilities:
-			case clockMultipliers:
-			case allStepParams:
 			break;
 		}
 	}
