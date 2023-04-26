@@ -29,6 +29,9 @@ extern "C" {
 }
 #include "seq.h"
 #include "my_seq_lcd.h"
+#include "Display.h"
+#include "Editor.h"
+#include "Sequencer.h"
 #include "app.h"
 
 
@@ -37,7 +40,8 @@ extern "C" {
 /////////////////////////////////////////////////////////////////////////////
 
 #define NOTESTACK_SIZE 16
-
+Sequencer sequencer;
+Editor editor;
 
 /////////////////////////////////////////////////////////////////////////////
 // Local definitions
@@ -81,6 +85,8 @@ extern "C" void APP_Init(void)
   // install sequencer task
   xTaskCreate(TASK_SEQ, "SEQ", configMINIMAL_STACK_SIZE, NULL, PRIORITY_TASK_SEQ, NULL);
 
+  editor.setMode(sequencer, Editor::noteNumbers);
+  editor.display.update(sequencer);
 }
 
 
@@ -89,12 +95,14 @@ extern "C" void APP_Init(void)
 /////////////////////////////////////////////////////////////////////////////
 extern "C" void APP_Background(void)
 {
+  /*
   SEQ_LCD_Clear();
   SEQ_LCD_CursorSet(10, 0);
   SEQ_LCD_PrintString("Here at 10,0");
   SEQ_LCD_CursorSet(70, 1);
   SEQ_LCD_PrintString("Here at 70,1");
   SEQ_LCD_Update(1);
+  */
 /*
     // print system time
     MIOS32_LCD_CursorSet(0, 0); // X, Y
