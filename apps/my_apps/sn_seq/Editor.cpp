@@ -29,6 +29,13 @@ void Editor::handleEncoderChange(Sequencer& seq, int encoder, int delta)
 
 void Editor::handleButtonChange(Sequencer& seq, int button, bool pressed)
 {
+	if ((button >= SEQ_UI_BUTTON_GP1) && (button <= SEQ_UI_BUTTON_GP16)) {
+		int step = button - SEQ_UI_BUTTON_GP1;
+		seq.steps[step].active = !seq.steps[step].active;
+		if (currentMode == active) {
+			display.update(seq, step, true);
+		}
+	}
 }
 
 void Editor::setMode(Sequencer &seq, EditModes newMode)

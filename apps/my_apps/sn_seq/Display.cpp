@@ -55,9 +55,10 @@ void Display::showStepParameters(Sequencer::Step &step)
 }
 
 /** Redraw the display. whichStep indicates which step needs to be redrawn;
- * use -1 to indicate all steps.
+ * use -1 to indicate all steps. If updateNow is true, also send the changes
+ * to the LCD.
  */
-void Display::update(Sequencer &seq, int whichStep)
+void Display::update(Sequencer &seq, int whichStep, bool updateNow)
 {
 	switch (currentMode) {
 		case OneParameterForSteps:
@@ -72,6 +73,9 @@ void Display::update(Sequencer &seq, int whichStep)
 		case AllParametersForStep:
 			showStepParameters(seq.steps[whichStep]);
 			break;
+	}
+	if (updateNow) {
+		SEQ_LCD_Update(0);
 	}
 }
 

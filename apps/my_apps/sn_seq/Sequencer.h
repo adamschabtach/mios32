@@ -25,6 +25,7 @@ public:
 		Step();
 
 		enum Parameters {
+			// Change Editor::EditModes if you change these:
 			p_active = 0,
 			p_noteNumber,
 			p_velocity,

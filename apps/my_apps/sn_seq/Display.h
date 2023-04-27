@@ -28,9 +28,10 @@ public:
 	void setParameter(Sequencer &seq, Sequencer::Step::Parameters param);
 
 	/** Redraw the display. whichStep indicates which step needs to be redrawn;
-	 * use -1 to indicate all steps.
+	 * use -1 to indicate all steps. If updateNow is true, also send the changes
+	 * to the LCD.
 	 */
-	void update(Sequencer &seq, int whichStep = -1);
+	void update(Sequencer &seq, int whichStep = -1, bool updateNow = false);
 
 private:
 
