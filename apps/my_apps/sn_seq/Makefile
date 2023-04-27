@@ -17,8 +17,11 @@ LCD       =     $(MIOS32_LCD)
 # add C files here
 THUMB_SOURCE    = seq.c \
 				  my_seq_lcd.c \
+				  $(MIOS32_PATH)/apps/sequencers/midibox_seq_v4/core/seq_blm8x8.c \
 				  $(MIOS32_PATH)/apps/sequencers/midibox_seq_v4/core/seq_hwcfg.c \
-				  $(MIOS32_PATH)/apps/sequencers/midibox_seq_v4/core/seq_blm8x8.c
+#				  $(MIOS32_PATH)/modules/file/file.c \
+#				  $(MIOS32_PATH)/modules/fatfs/src/ff.c \
+#				  $(MIOS32_PATH)/modules/fatfs/src/diskio.c
 
 # add C++ files here
 THUMB_CPP_SOURCE = app.cpp \
@@ -32,7 +35,10 @@ ARM_SOURCE      =
 ARM_AS_SOURCE   =
 
 C_INCLUDE = 	-I . \
-				-I $(MIOS32_PATH)/apps/sequencers/midibox_seq_v4/core/
+				-I $(MIOS32_PATH)/apps/sequencers/midibox_seq_v4/core/ \
+				-I $(MIOS32_PATH)/modules/file/ \
+				-I $(MIOS32_PATH)/modules/fatfs/src/
+
 A_INCLUDE = 	-I .
 
 LIBS = 		

@@ -50,7 +50,7 @@ extern s32 SEQ_NotifyNoteOff(u8 note);
 // Export global variables
 /////////////////////////////////////////////////////////////////////////////
 
-static u8 seq_pause;
+//static u8 seq_pause;
 
 
 #endif /* _SEQ_H */

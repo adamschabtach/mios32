@@ -17,6 +17,7 @@
 
 #include <mios32.h>
 
+#include "file.h"
 #include <FreeRTOS.h>
 #include <portmacro.h>
 #include <task.h>
@@ -69,6 +70,9 @@ extern "C" void APP_Init(void)
   MIOS32_BOARD_LED_Set(1, 0);
 
   // initialize hardware soft-config
+  screw this. Let's hardcode this shit to get it going. See MBSEQ_HW.V4 
+  button definitions start at line 384. encoder definitions are after the buttons.
+
   SEQ_HWCFG_Init(0);
 
   SEQ_LCD_Init(0); 
@@ -80,13 +84,23 @@ extern "C" void APP_Init(void)
   SEQ_Init(0);
 
   // install MIDI Rx callback function
-  MIOS32_MIDI_DirectRxCallback_Init(NOTIFY_MIDI_Rx);
+ // MIOS32_MIDI_DirectRxCallback_Init(NOTIFY_MIDI_Rx);
 
   // install sequencer task
-  xTaskCreate(TASK_SEQ, "SEQ", configMINIMAL_STACK_SIZE, NULL, PRIORITY_TASK_SEQ, NULL);
+//  xTaskCreate(TASK_SEQ, "SEQ", configMINIMAL_STACK_SIZE, NULL, PRIORITY_TASK_SEQ, NULL);
 
   editor.setMode(sequencer, Editor::noteNumbers);
-  editor.display.update(sequencer);
+  editor.display.update(sequencer, -1, true);  
+ #if 0 
+  FILE_Init(0);
+  s32 status = FILE_CheckSDCard();
+
+  if( status == 1 ) {
+      MIOS32_MIDI_SendDebugMessage("SD Card connected: %s\n", FILE_VolumeLabel());
+    } else {
+      MIOS32_MIDI_SendDebugMessage("No SD Card found.");
+    }
+#endif
 }
 
 
@@ -183,6 +197,9 @@ extern "C" void APP_SRIO_ServiceFinish(void)
 /////////////////////////////////////////////////////////////////////////////
 extern "C" void APP_DIN_NotifyToggle(u32 pin, u32 pin_value)
 {
+    MIOS32_MIDI_SendDebugMessage("Button %d %s\n", pin, pin_value ? "depressed" : "pressed");
+
+  editor.handleButtonChange(sequencer, pin, pin_value);
 }
 
 
@@ -193,6 +210,8 @@ extern "C" void APP_DIN_NotifyToggle(u32 pin, u32 pin_value)
 /////////////////////////////////////////////////////////////////////////////
 extern "C" void APP_ENC_NotifyChange(u32 encoder, s32 incrementer)
 {
+  MIOS32_MIDI_SendDebugMessage("Encoder %d %d\n", encoder, incrementer);
+  editor.handleEncoderChange(sequencer, encoder, incrementer);
 }
 
 
