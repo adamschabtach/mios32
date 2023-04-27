@@ -31,7 +31,8 @@ public:
 			p_gateLength,
 			p_ccValue,
 			p_probability,
-			p_clockMultiplier
+			p_clockMultiplier,
+			numParameters
 		};
 
 		bool active;
