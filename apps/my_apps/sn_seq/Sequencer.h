@@ -45,7 +45,7 @@ public:
 
 	static const int MaxSteps = 16;
 
-	std::vector<Step> sequence;
+	Step steps[MaxSteps];
 	int currentStepIndex;
 	int sequenceLength;
 };

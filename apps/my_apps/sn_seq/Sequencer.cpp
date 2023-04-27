@@ -18,6 +18,6 @@ Sequencer::Sequencer()
 {
 	sequenceLength = MaxSteps;
 	for (int i = 0; i < MaxSteps; i++) {
-		sequence.assign(i, Step());
+		steps[i] = Step();
 	}
 }

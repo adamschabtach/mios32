@@ -24,15 +24,23 @@ void Display::setMode(Sequencer &seq, DisplayModes newMode)
 		currentMode = newMode;
   		SEQ_LCD_Clear();
 		update(seq);
+		SEQ_LCD_Update(1);
 	}
 }
 
 /** Set which parameter will be displayed for all steps. */
 void Display::setParameter(Sequencer &seq, Sequencer::Step::Parameters param)
 {
+	static char *names[] = { "Active", "Note", "Velocity", "Gate Length", "CC Value",
+		"Probability", "Clock Multiplier" };
+
 	if (param != currentParameter) {
 		currentParameter = param;
+		SEQ_LCD_Clear();
+		SEQ_LCD_CursorSet(0, 0);
+		SEQ_LCD_PrintString(names[param]);
 		update(seq);
+		SEQ_LCD_Update(1);
 	}
 }
 
@@ -62,7 +70,7 @@ void Display::update(Sequencer &seq, int whichStep)
 			}
 			break;
 		case AllParametersForStep:
-			showStepParameters(seq.sequence[whichStep]);
+			showStepParameters(seq.steps[whichStep]);
 			break;
 	}
 }
@@ -70,28 +78,28 @@ void Display::update(Sequencer &seq, int whichStep)
 /** Display the current parameter for one step in the sequence. */
 void Display::drawStepParameter(Sequencer &seq, int whichStep)
 {
-	int n = -999;
 	char str[6];
 	SEQ_LCD_CursorSet(5 * whichStep, 1);
 	switch (currentParameter) {
+		case Sequencer::Step::p_active:
+			sprintf(str, "%s", seq.steps[whichStep].active ? "On" : "Off");
+			break;
 		case Sequencer::Step::p_noteNumber:
-			n = seq.sequence[whichStep].noteNumber;
+			sprintf(str, "%d", seq.steps[whichStep].noteNumber);
 			break;
 		case Sequencer::Step::p_ccValue:
-			n = seq.sequence[whichStep].ccValue;
+			sprintf(str, "%d", seq.steps[whichStep].ccValue);
 			break;
 		case Sequencer::Step::p_velocity:
-			n = seq.sequence[whichStep].velocity;
+			sprintf(str, "%d", seq.steps[whichStep].velocity);
 			break;
 		case Sequencer::Step::p_gateLength:
-			n = seq.sequence[whichStep].gateLength;
+			sprintf(str, "%d%%", seq.steps[whichStep].gateLength);
 			break;
 		case Sequencer::Step::p_probability:
-			n = seq.sequence[whichStep].probability;
-			break;
+			sprintf(str, "%d%%", seq.steps[whichStep].probability);
+			break; 
 	}
-	sprintf(str, "%d", n);
 	SEQ_LCD_PrintStringPadded(str, 5);
-	SEQ_LCD_Update(0);
 }
 
