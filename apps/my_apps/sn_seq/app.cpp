@@ -30,6 +30,7 @@ extern "C" {
 }
 #include "seq.h"
 #include "my_seq_lcd.h"
+#include "hwcfg.h"
 #include "Display.h"
 #include "Editor.h"
 #include "Sequencer.h"
@@ -69,11 +70,7 @@ extern "C" void APP_Init(void)
   // turn off gate LED
   MIOS32_BOARD_LED_Set(1, 0);
 
-  // initialize hardware soft-config
-  screw this. Let's hardcode this shit to get it going. See MBSEQ_HW.V4 
-  button definitions start at line 384. encoder definitions are after the buttons.
-
-  SEQ_HWCFG_Init(0);
+  hwcfg_init();
 
   SEQ_LCD_Init(0); 
 

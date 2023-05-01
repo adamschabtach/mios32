@@ -14,3 +14,7 @@
 #pragma once
 
 #define HWCFG_NUM_ENCODERS 17
+
+extern const mios32_enc_config_t my_enc_config[HWCFG_NUM_ENCODERS];
+
+void hwcfg_init();

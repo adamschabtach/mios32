@@ -27,6 +27,7 @@ THUMB_SOURCE    = seq.c \
 THUMB_CPP_SOURCE = app.cpp \
 				   Editor.cpp \
 				   Display.cpp \
+				   hwcfg.cpp \
 				   Sequencer.cpp
 
 # (following source stubs not relevant for Cortex M3 derivatives)
