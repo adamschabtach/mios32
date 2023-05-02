@@ -27,6 +27,7 @@
 #include <seq_midi_out.h>
 extern "C" {
 #include "../../sequencers/midibox_seq_v4/core/seq_hwcfg.h"
+#include "../../sequencers/midibox_seq_v4/core/seq_blm8x8.h"
 }
 #include "seq.h"
 #include "my_seq_lcd.h"
@@ -73,6 +74,7 @@ extern "C" void APP_Init(void)
   hwcfg_init();
 
   SEQ_LCD_Init(0); 
+  SEQ_BLM8X8_Init(0);
 
   // initialize MIDI handler
   SEQ_MIDI_OUT_Init(0);

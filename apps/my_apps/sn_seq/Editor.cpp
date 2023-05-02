@@ -11,6 +11,15 @@
 #include "Editor.h"
 #include "Display.h"
 #include "Sequencer.h"
+#include <algorithm>
+
+int addToMIDIValue(int &val, int change) {
+  return val = std::max<int>(std::min<int>(val + change, 127), 0);
+}
+
+int addToPercentValue(int &val, int change) {
+  return val = std::max<int>(std::min<int>(val + change, 100), 0);
+}
 
 Editor::Editor()
 : currentMode(noteNumbers)
@@ -24,6 +33,33 @@ void Editor::handleEncoderChange(Sequencer& seq, int encoder, int delta)
 		int n = ((int)currentMode + delta + (int)numModes) % (int)numModes;
 		EditModes newMode = (EditModes)n;
 		setMode(seq, newMode);
+	} else {
+		if (currentMode == allStepParams) {
+
+		} else {
+			int stepNum = encoder;
+			switch (currentMode) {
+				case noteNumbers:
+					addToMIDIValue(seq.steps[stepNum].noteNumber, delta);
+					break;
+				case velocities:
+					addToMIDIValue(seq.steps[stepNum].velocity, delta);
+					break;
+				case ccValues:
+					addToMIDIValue(seq.steps[stepNum].ccValue, delta);
+					break;
+				case gateLengths:
+					addToPercentValue(seq.steps[stepNum].gateLength, delta);
+					break;
+				case probabilities:
+					addToPercentValue(seq.steps[stepNum].probability, delta);
+					break;
+				case active:
+				case clockMultipliers:
+					break;
+			}
+			display.update(seq, stepNum, true);
+		}
 	}
 }
 

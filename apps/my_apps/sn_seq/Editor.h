@@ -12,6 +12,7 @@
 
 #include "Sequencer.h"
 #include "Display.h"
+#include <algorithm>
 
 /* These are grabbed from seq_ui.h. */
 // TODO find out how to use HWCFG symbols for other buttons.
