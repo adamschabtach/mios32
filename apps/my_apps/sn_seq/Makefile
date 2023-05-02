@@ -19,6 +19,7 @@ THUMB_SOURCE    = seq.c \
 				  my_seq_lcd.c \
 				  $(MIOS32_PATH)/apps/sequencers/midibox_seq_v4/core/seq_blm8x8.c \
 				  $(MIOS32_PATH)/apps/sequencers/midibox_seq_v4/core/seq_hwcfg.c \
+				  $(MIOS32_PATH)/modules/blm/blm.c \
 #				  $(MIOS32_PATH)/modules/file/file.c \
 #				  $(MIOS32_PATH)/modules/fatfs/src/ff.c \
 #				  $(MIOS32_PATH)/modules/fatfs/src/diskio.c

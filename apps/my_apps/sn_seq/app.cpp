@@ -28,6 +28,7 @@
 extern "C" {
 #include "../../sequencers/midibox_seq_v4/core/seq_hwcfg.h"
 #include "../../sequencers/midibox_seq_v4/core/seq_blm8x8.h"
+#include "../../../../modules/blm/blm.h"
 }
 #include "seq.h"
 #include "my_seq_lcd.h"
@@ -74,6 +75,7 @@ extern "C" void APP_Init(void)
   hwcfg_init();
 
   SEQ_LCD_Init(0); 
+  BLM_Init(0);
   SEQ_BLM8X8_Init(0);
 
   // initialize MIDI handler
@@ -143,6 +145,8 @@ extern "C" void APP_Tick(void)
 {
   // set LED depending on sequencer run state
   MIOS32_BOARD_LED_Set(1, SEQ_BPM_IsRunning() ? 1 : 0);
+  BLM_ButtonHandler(APP_BLM_NotifyToggle);
+  SEQ_BLM8X8_ButtonHandler(APP_SEQ_BLM8X8_NotifyToggle);
 }
 
 
@@ -179,6 +183,10 @@ extern "C" void APP_MIDI_NotifyPackage(mios32_midi_port_t port, mios32_midi_pack
 /////////////////////////////////////////////////////////////////////////////
 extern "C" void APP_SRIO_ServicePrepare(void)
 {
+    // prepare DOUT registers of BLM to drive the column
+    BLM_PrepareCol();
+    // prepare DOUT registers of 8x8 BLM to drive the row
+    SEQ_BLM8X8_PrepareRow();
 }
 
 
@@ -187,6 +195,11 @@ extern "C" void APP_SRIO_ServicePrepare(void)
 /////////////////////////////////////////////////////////////////////////////
 extern "C" void APP_SRIO_ServiceFinish(void)
 {
+    // call the BL_GetRow function after scan is finished to capture the read DIN values
+    BLM_GetRow();
+    // call the BL_X_GetRow function after scan is finished to capture the read DIN values
+    SEQ_BLM8X8_GetRow();
+
 }
 
 
@@ -221,6 +234,32 @@ extern "C" void APP_AIN_NotifyChange(u32 pin, u32 pin_value)
 {
 }
 
+
+/////////////////////////////////////////////////////////////////////////////
+// This hook is called when a BLM button has been toggled
+// (see also SEQ_TASK_Period1mS)
+// pin_value is 1 when button released, and 0 when button pressed
+/////////////////////////////////////////////////////////////////////////////
+extern "C" void APP_BLM_NotifyToggle(u32 pin, u32 pin_value)
+{
+  u8 row = pin / 16;
+  u8 pin_of_row = pin % 16;
+    MIOS32_MIDI_SendDebugMessage("[DIN_TESTMODE] BLM Pin M%d D%d %s\n", row+1, pin_of_row, pin_value ? "depressed" : "pressed");
+
+  // forward to UI BLM button handler
+//  SEQ_UI_BLM_Button_Handler(row, pin_of_row, pin_value);
+}
+
+
+/////////////////////////////////////////////////////////////////////////////
+// This hook is called when a SEQ_BLM8X8 button has been toggled
+// (see also SEQ_TASK_Period1mS)
+// pin_value is 1 when button released, and 0 when button pressed
+/////////////////////////////////////////////////////////////////////////////
+extern "C" void APP_SEQ_BLM8X8_NotifyToggle(u8 blm, u32 pin, u32 pin_value)
+{
+    MIOS32_MIDI_SendDebugMessage("[DIN_TESTMODE] BLM8x8 Pin M%d%c D%d %s\n", (pin>>3)+1, 'A'+blm, pin&7, pin_value ? "depressed" : "pressed");
+  }
 
 /////////////////////////////////////////////////////////////////////////////
 // This task is called periodically each mS to handle sequencer requests
