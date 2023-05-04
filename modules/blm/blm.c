@@ -311,15 +311,14 @@ s32 BLM_GetRow(void)
 //!   <notifcation-hook>(s32 pin, s32 value)
 //! \return < 0 on errors
 /////////////////////////////////////////////////////////////////////////////
-s32 BLM_ButtonHandler(void *_notify_hook)
+s32 BLM_ButtonHandler(void (*notify_hook)(u32 pin, u32 value))
 {
   s32 sr;
   s32 sr_pin;
   u8 changed;
-  void (*notify_hook)(u32 pin, u32 value) = _notify_hook;
 
   // no hook?
-  if( _notify_hook == NULL )
+  if( notify_hook == NULL )
     return -2;
 
   // check all shift registers for DIN pin changes

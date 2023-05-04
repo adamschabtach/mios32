@@ -165,12 +165,11 @@ s32 SEQ_BLM8X8_GetRow(void)
 // IN: -
 // OUT: returns -1 on errors
 /////////////////////////////////////////////////////////////////////////////
-s32 SEQ_BLM8X8_ButtonHandler(void *_notify_hook)
+s32 SEQ_BLM8X8_ButtonHandler(void (*notify_hook)(u8 blm, u32 pin, u32 value))
 {
-  void (*notify_hook)(u8 blm, u32 pin, u32 value) = _notify_hook;
 
   // no hook?
-  if( _notify_hook == NULL )
+  if( notify_hook == NULL )
     return -2;
 
   int blm;

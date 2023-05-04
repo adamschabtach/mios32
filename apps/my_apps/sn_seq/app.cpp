@@ -17,6 +17,9 @@
 
 #include <mios32.h>
 
+#include <cstdarg>
+#include <cstring>
+
 #include "file.h"
 #include <FreeRTOS.h>
 #include <portmacro.h>
@@ -293,4 +296,44 @@ extern "C" s32 NOTIFY_MIDI_Rx(mios32_midi_port_t port, u8 midi_byte)
   SEQ_BPM_NotifyMIDIRx(midi_byte);
 
   return 0; // no error, no filtering
+}
+
+/////////////////////////////////////////////////////////////////////////////
+// Send a Mutex protected debug messages (referenced by DEBUG_MSG macro)
+/////////////////////////////////////////////////////////////////////////////
+// AS except that we don't really have mutexes yet...
+#define MUTEX_MIDIOUT_TAKE
+#define MUTEX_MIDIOUT_GIVE
+extern "C" void APP_SendDebugMessage(char *format, ...)
+{
+  MUTEX_MIDIOUT_TAKE;
+
+  {
+    char str[128]; // 128 chars allowed
+    va_list args;
+
+    // failsave: if format string is longer than 100 chars, break here
+    // note that this is a weak protection: if %s is used, or a lot of other format tokens,
+    // the resulting string could still lead to a buffer overflow
+    // other the other hand we don't want to allocate too many byte for buffer[] to save stack
+    if( strlen(format) > 100 ) {
+      // exit with less costly message
+      MIOS32_MIDI_SendDebugString("(ERROR: string passed to MIOS32_MIDI_SendDebugMessage() is longer than 100 chars!\n");
+    } else {
+      // transform formatted string into string
+      va_start(args, format);
+      vsprintf(str, format, args);
+    }
+
+    size_t len = strlen(str);
+    u8 *str_ptr = (u8 *)str;
+    size_t i;
+    for(i=0; i<len; ++i) {
+      *str_ptr++ &= 0x7f; // ensure that MIDI protocol won't be violated
+    }
+
+    MIOS32_MIDI_SendDebugString(str);
+  }
+
+  MUTEX_MIDIOUT_GIVE;
 }

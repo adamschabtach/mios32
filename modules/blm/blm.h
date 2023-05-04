@@ -127,7 +127,7 @@ typedef struct {
 extern s32 BLM_Init(u32 mode);
 extern s32 BLM_PrepareCol(void);
 extern s32 BLM_GetRow(void);
-extern s32 BLM_ButtonHandler(void *notify_hook);
+extern s32 BLM_ButtonHandler(void (*notify_hook)(u32 pin, u32 value));
 
 extern s32 BLM_DIN_PinGet(u32 pin);
 extern u8 BLM_DIN_SRGet(u32 sr);

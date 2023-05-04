@@ -83,7 +83,7 @@ void Display::update(Sequencer &seq, int whichStep, bool updateNow)
 void Display::drawStepParameter(Sequencer &seq, int whichStep)
 {
 	char str[6];
-	SEQ_LCD_CursorSet(5 * whichStep, 1);
+	SEQ_LCD_CursorSet(5 * whichStep + 1, 1);
 	switch (currentParameter) {
 		case Sequencer::Step::p_active:
 			sprintf(str, "%s", seq.steps[whichStep].active ? "On" : "Off");
@@ -103,6 +103,9 @@ void Display::drawStepParameter(Sequencer &seq, int whichStep)
 		case Sequencer::Step::p_probability:
 			sprintf(str, "%d%%", seq.steps[whichStep].probability);
 			break; 
+		case Sequencer::Step::p_clockMultiplier:
+			sprintf(str, "%d", seq.steps[whichStep].clockMultiplier);
+			break;
 	}
 	SEQ_LCD_PrintStringPadded(str, 5);
 }

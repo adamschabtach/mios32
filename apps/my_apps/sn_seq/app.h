@@ -14,7 +14,6 @@
 #ifndef _APP_H
 #define _APP_H
 
-
 /////////////////////////////////////////////////////////////////////////////
 // Global definitions
 /////////////////////////////////////////////////////////////////////////////
@@ -45,6 +44,7 @@ extern void APP_ENC_NotifyChange(u32 encoder, s32 incrementer);
 extern void APP_AIN_NotifyChange(u32 pin, u32 pin_value);
 extern void APP_BLM_NotifyToggle(u32 pin, u32 pin_value);
 extern void APP_SEQ_BLM8X8_NotifyToggle(u8 blm, u32 pin, u32 pin_value);
+extern void APP_SendDebugMessage(char *format, ...);
 
 #ifdef __cplusplus
 }

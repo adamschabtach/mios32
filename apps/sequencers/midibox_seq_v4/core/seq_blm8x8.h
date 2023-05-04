@@ -46,7 +46,9 @@ extern s32 SEQ_BLM8X8_Init(u32 mode);
 
 extern s32 SEQ_BLM8X8_PrepareRow(void);
 extern s32 SEQ_BLM8X8_GetRow(void);
-extern s32 SEQ_BLM8X8_ButtonHandler(void *notify_hook);
+//extern s32 SEQ_BLM8X8_ButtonHandler(void *notify_hook);
+extern s32 SEQ_BLM8X8_ButtonHandler(
+  void (*notify_hook)(u8 blm, u32 pin, u32 value));
 
 extern s32 SEQ_BLM8X8_ButtonGet(u8 blm, u32 button);
 extern u8 SEQ_BLM8X8_ButtonSRGet(u8 blm, u8 row);
